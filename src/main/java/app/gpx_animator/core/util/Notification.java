@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.ImageIcon;
 import java.awt.AWTException;
+import java.awt.GraphicsEnvironment;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.io.FileNotFoundException;
@@ -52,6 +53,11 @@ public enum Notification {
 
     public static void init() {
         try {
+            if (GraphicsEnvironment.isHeadless() || !SystemTray.isSupported()) {
+                LOGGER.warn("Notifications not supported on this platform.");
+                thisPlatformSupportsNotifications = false;
+                return;
+            }
             final var systemTray = SystemTray.getSystemTray();
             final var fileName = "/icon_128.png";
             final var url = Notification.class.getResource(fileName);
@@ -63,7 +69,7 @@ public enum Notification {
             trayIcon.setImageAutoSize(true);
             systemTray.add(trayIcon);
             thisPlatformSupportsNotifications = true;
-        } catch (final AWTException | FileNotFoundException e) {
+        } catch (final AWTException | FileNotFoundException | UnsupportedOperationException e) {
             LOGGER.warn("Notifications not supported on this platform: {}", e.getMessage());
             thisPlatformSupportsNotifications = false;
         }
