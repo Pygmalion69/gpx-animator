@@ -546,10 +546,10 @@ abstract class TrackSettingsPanel extends JPanel {
                 .trimGpxStart((Long) trimGpxStartSpinner.getValue())
                 .trimGpxEnd((Long) trimGpxEndSpinner.getValue())
                 .trackIcon((TrackIcon) travelIconComboBox.getSelectedItem())
-                .inputIcon(new File(travelIconFileSelector.getFilename()))
+                .inputIcon(travelIconFileSelector.getFile())
                 .mirrorTrackIcon(travelMirrorCheckBox.isSelected())
                 .trackEndIcon((TrackIcon) trackEndIconComboBox.getSelectedItem())
-                .inputEndIcon(new File(trackEndIconFileSelector.getFilename()))
+                .inputEndIcon(trackEndIconFileSelector.getFile())
                 .mirrorTrackEndIcon(trackEndMirrorCheckBox.isSelected());
         return b.build();
     }
