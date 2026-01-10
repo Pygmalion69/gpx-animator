@@ -662,7 +662,8 @@ public final class Renderer {
                 forcedTime += forcedPointInterval;
                 time = forcedTime;
             } else {
-                time = gpxPoint.getTime() == Long.MIN_VALUE ? defaultTimeIfMissing : gpxPoint.getTime();
+                final var pointTime = gpxPoint.getTime();
+                time = pointTime == null || pointTime == Long.MIN_VALUE ? defaultTimeIfMissing : pointTime;
                 if (time == Long.MIN_VALUE) {
                     final var filename = trackConfiguration.getInputGpx().getName();
                     throw new UserException(
